@@ -47,9 +47,15 @@ class Rule implements Proposition
      *
      * @return boolean
      */
-    public function evaluate(Context $context)
+    public function evaluate(Context $context, $return = true)
     {
-        return $this->condition->evaluate($context);
+        if ( ! isset($this->evaluated)) {
+            $this->evaluated = $this->condition->evaluate($context);
+        }
+
+        if ( ! $return) return $this;
+
+        return $this->evaluated;
     }
 
     /**
