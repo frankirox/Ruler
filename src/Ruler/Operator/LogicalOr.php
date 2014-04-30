@@ -28,18 +28,22 @@ class LogicalOr extends LogicalOperator
      *
      * @return boolean
      */
-    public function evaluate(Context $context)
+    public function evaluate(Context $context, $return = true)
     {
         if (empty($this->propositions)) {
             throw new \LogicException('Logical Or requires at least one proposition');
         }
 
-        foreach ($this->propositions as $prop) {
-            if ($prop->evaluate($context) === true) {
-                return true;
+        if ( ! isset($this->evaluated)) {
+            foreach ($this->propositions as $prop) {
+                if ($prop->evaluate($context) === true) {
+                    $this->evaluated = true;
+                }
             }
+
+            if ( ! isset($this->evaluated)) $this->evaluated = false;
         }
 
-        return false;
+        return $return ? $this->evaluated : $this;
     }
 }

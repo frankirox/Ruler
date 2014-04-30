@@ -28,8 +28,12 @@ class LessThanOrEqualTo extends ComparisonOperator
      *
      * @return boolean
      */
-    public function evaluate(Context $context)
+    public function evaluate(Context $context, $return = true)
     {
-        return $this->left->prepareValue($context)->greaterThan($this->right->prepareValue($context)) === false;
+        if ( ! isset($this->evaluated)) {
+            $this->evaluated = $this->left->prepareValue($context)->greaterThan($this->right->prepareValue($context)) === false;
+        }
+
+        return $return ? $this->evaluated : $this;
     }
 }

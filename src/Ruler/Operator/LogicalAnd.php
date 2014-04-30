@@ -28,18 +28,22 @@ class LogicalAnd extends LogicalOperator
      *
      * @return boolean
      */
-    public function evaluate(Context $context)
+    public function evaluate(Context $context, $return = true)
     {
         if (empty($this->propositions)) {
             throw new \LogicException('Logical And requires at least one proposition');
         }
 
-        foreach ($this->propositions as $prop) {
-            if ($prop->evaluate($context) === false) {
-                return false;
+        if ( ! isset($this->evaluated)) {
+            foreach ($this->propositions as $prop) {
+                if ($prop->evaluate($context) === false) {
+                    $this->evaluated = false;
+                }
             }
+
+            if ( ! isset($this->evaluated)) $this->evaluated = true;
         }
 
-        return true;
+        return $return ? $this->evaluated : $this;
     }
 }

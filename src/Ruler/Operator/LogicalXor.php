@@ -28,21 +28,25 @@ class LogicalXor extends LogicalOperator
      *
      * @return boolean
      */
-    public function evaluate(Context $context)
+    public function evaluate(Context $context, $return = true)
     {
         if (empty($this->propositions)) {
             throw new \LogicException('Logical Xor requires at least one proposition');
         }
 
-        $true = 0;
-        foreach ($this->propositions as $prop) {
-            if ($prop->evaluate($context) === true) {
-                if (++$true > 1) {
-                    return false;
+        if ( ! isset($this->evaluated)) {
+            $true = 0;
+            foreach ($this->propositions as $prop) {
+                if ($prop->evaluate($context) === true) {
+                    if (++$true > 1) {
+                        $this->evaluated = false;
+                    }
                 }
             }
+
+            if ( ! isset($this->evaluated)) $this->evaluated = $true === 1;
         }
 
-        return $true === 1;
+        return $return ? $this->evaluated : $this;
     }
 }

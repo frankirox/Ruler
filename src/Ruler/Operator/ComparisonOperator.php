@@ -25,6 +25,7 @@ abstract class ComparisonOperator implements Proposition
 {
     protected $left;
     protected $right;
+    protected $evaluated;
 
     /**
      * Comparison Operator constructor.

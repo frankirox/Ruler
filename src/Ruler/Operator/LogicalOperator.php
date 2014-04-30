@@ -25,6 +25,7 @@ use Ruler\Proposition;
 abstract class LogicalOperator implements Proposition
 {
     protected $propositions = array();
+    protected $evaluated;
 
     /**
      * Logical Operator constructor.

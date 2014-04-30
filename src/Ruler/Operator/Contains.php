@@ -28,8 +28,12 @@ class Contains extends ComparisonOperator
      *
      * @return boolean
      */
-    public function evaluate(Context $context)
+    public function evaluate(Context $context, $return = true)
     {
-        return $this->left->prepareValue($context)->contains($this->right->prepareValue($context));
+        if ( ! isset($this->evaluated)) {
+            $this->evaluated = $this->left->prepareValue($context)->contains($this->right->prepareValue($context));
+        }
+
+        return $return ? $this->evaluated : $this;
     }
 }
