@@ -28,8 +28,10 @@ class DoesNotContain extends ComparisonOperator
      *
      * @return boolean
      */
-    public function evaluate(Context $context, $return = true)
+    public function evaluate(Context $context = null, $return = true)
     {
+        $context = $context ?: new Context;
+
         if ( ! isset($this->evaluated)) {
             $this->evaluated = $this->left->prepareValue($context)->contains($this->right->prepareValue($context)) === false;
         }

@@ -71,8 +71,10 @@ class LogicalNot extends LogicalOperator
      *
      * @return boolean
      */
-    public function evaluate(Context $context, $return = true)
+    public function evaluate(Context $context = null, $return = true)
     {
+        $context = $context ?: new Context;
+
         if (!isset($this->proposition)) {
             throw new \LogicException('Logical Not requires exactly one proposition');
         }

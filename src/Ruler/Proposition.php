@@ -28,5 +28,5 @@ interface Proposition
      *
      * @return boolean
      */
-    public function evaluate(Context $context, $return = true);
+    public function evaluate(Context $context = null, $return = true);
 }
